@@ -177,27 +177,37 @@ export default function App() {
           <h2>Welcome to Fashion Hub</h2>
           <p>Discover the latest fashion at affordable prices.</p>
           <div className="products">
-            {products.map((p) => (
-              <div className="product" key={p.id}>
-                <img
-                  src={p.image}
-                  alt={p.name}
-                  onError={(e) => {
-                    e.currentTarget.src =
-                      "https://placehold.co/300x350?text=Fashion";
-                  }}
-                />
-                <h3>{p.name}</h3>
-                <p>{p.category}</p>
-                <h3>₹{p.price}</h3>
-                <button onClick={() => {
-                  setCart([...cart, p]);
-                  setMessage(`${p.name} added to cart.`);
-                }}>
-                  Add to Cart
-                </button>
-              </div>
-            ))}
+            {products.map((p) => {
+              const productImage = (p.image && !p.image.includes("placehold.co")) 
+                ? p.image 
+                : (p.name?.toLowerCase().includes("gown") ? "/products/party_gown.jpg"
+                  : p.name?.toLowerCase().includes("kurti") || p.name?.toLowerCase().includes("saree") || p.name?.toLowerCase().includes("lehenga") || p.name?.toLowerCase().includes("anarkali") ? "/products/traditional_kurti.jpg"
+                  : p.name?.toLowerCase().includes("shirt") || p.name?.toLowerCase().includes("jacket") || p.name?.toLowerCase().includes("hoodie") || p.name?.toLowerCase().includes("t-shirt") ? "/products/mens_shirt.jpg"
+                  : p.category === "Kids" ? "/products/kids_wear.jpg"
+                  : "/products/floral_dress.jpg");
+
+              return (
+                <div className="product" key={p.id}>
+                  <img
+                    src={productImage}
+                    alt={p.name}
+                    onError={(e) => {
+                      e.currentTarget.src =
+                        "https://placehold.co/300x350?text=Fashion";
+                    }}
+                  />
+                  <h3>{p.name}</h3>
+                  <p>{p.category}</p>
+                  <h3>₹{p.price}</h3>
+                  <button onClick={() => {
+                    setCart([...cart, p]);
+                    setMessage(`${p.name} added to cart.`);
+                  }}>
+                    Add to Cart
+                  </button>
+                </div>
+              );
+            })}
           </div>
         </main>
       )}
