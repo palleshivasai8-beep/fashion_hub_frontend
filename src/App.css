@@ -1,0 +1,109 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #fff0f5;
+  color: #333;
+}
+
+header {
+  background: #e91e63;
+  color: white;
+  padding: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+nav {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+button {
+  background: #e91e63;
+  color: white;
+  border: none;
+  padding: 10px 14px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+header button {
+  background: white;
+  color: #e91e63;
+}
+
+main {
+  padding: 25px;
+  text-align: center;
+}
+
+.products {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+  margin-top: 25px;
+}
+
+.product {
+  background: white;
+  padding: 15px;
+  border-radius: 10px;
+  margin: 15px auto;
+  max-width: 400px;
+  box-shadow: 0 2px 8px #ddd;
+}
+
+.products .product {
+  max-width: none;
+  margin: 0;
+}
+
+.product img {
+  width: 100%;
+  height: 230px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.auth-form {
+  width: 320px;
+  max-width: calc(100% - 60px);
+  margin: 40px auto;
+  background: white;
+  padding: 25px;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px #ddd;
+  text-align: center;
+}
+
+.auth-form input,
+.auth-form textarea {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-family: Arial, sans-serif;
+}
+
+.auth-form textarea {
+  min-height: 100px;
+}
+
+.message {
+  text-align: center;
+  color: #b00045;
+  padding: 10px;
+}
+
+@media (max-width: 600px) {
+  header {
+    flex-direction: column;
+    gap: 10px;
+  }
+}
