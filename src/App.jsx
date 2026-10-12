@@ -2,7 +2,10 @@
 import React, { useEffect, useState } from "react";
 import "./App.css";
 
-const API = "http://localhost:8081/api";
+const rawApiUrl = import.meta.env.VITE_API_URL || "http://localhost:8081";
+const API = rawApiUrl.replace(/\/+$/, "").endsWith("/api")
+  ? rawApiUrl.replace(/\/+$/, "")
+  : `${rawApiUrl.replace(/\/+$/, "")}/api`;
 
 export default function App() {
   const [page, setPage] = useState("home");
@@ -87,6 +90,19 @@ export default function App() {
       if (!response.ok) throw new Error("Unable to load orders");
       setOrders(await response.json());
       setPage("orders");
+    } catch (error) {
+      setMessage(error.message);
+    }
+  }
+
+  async function markDelivered(id) {
+    try {
+      const response = await fetch(`${API}/orders/${id}/deliver`, {
+        method: "PUT"
+      });
+      if (!response.ok) throw new Error("Unable to update order status");
+      setMessage(`Order #${id} marked as Delivered!`);
+      await loadOrders();
     } catch (error) {
       setMessage(error.message);
     }
@@ -269,7 +285,12 @@ export default function App() {
               <p>Quantity: {o.quantity}</p>
               <p>Total: ₹{o.totalPrice}</p>
               <p>Delivery address: {o.address}</p>
-              <p>Status: {o.status}</p>
+              <p>Status: <strong>{o.status}</strong></p>
+              {o.status !== "Delivered" && (
+                <button onClick={() => markDelivered(o.id)}>
+                  Mark as Delivered
+                </button>
+              )}
             </div>
           ))}
         </main>
